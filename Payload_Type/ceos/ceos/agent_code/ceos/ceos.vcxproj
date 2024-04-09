@@ -141,6 +141,7 @@
     <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\Package.h" />
     <ClInclude Include="include\Parser.h" />
+    <ClInclude Include="include\Transport.h" />
     <ClInclude Include="include\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
