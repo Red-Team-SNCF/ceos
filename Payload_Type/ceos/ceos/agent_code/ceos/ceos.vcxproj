@@ -70,6 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Users\commando\source\repos\basic_implant\Payload_Type\ceos\ceos\agent_code\ceos\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -128,6 +131,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ceos.cpp" />
+    <ClCompile Include="source\Command.cpp" />
+    <ClCompile Include="source\Package.cpp" />
+    <ClCompile Include="source\Parser.cpp" />
+    <ClCompile Include="source\Transport.cpp" />
+    <ClCompile Include="source\Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Command.h" />
+    <ClInclude Include="include\Package.h" />
+    <ClInclude Include="include\Parser.h" />
+    <ClInclude Include="include\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
