@@ -1,5 +1,4 @@
 #pragma once
-#include <windows.h>
 #include "Utils.h"
 
 typedef struct 

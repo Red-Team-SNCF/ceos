@@ -1,4 +1,7 @@
 #pragma once
+#ifndef TRANSPORT
+#define TRANSPORT
+
 #include <windows.h>
 #include <winhttp.h>
 #include "Parser.h"
@@ -8,3 +11,4 @@
 #define HTTP_TRANSPORT
 
 Parser* sendAndReceive(PBYTE data, SIZE_T size);
+#endif

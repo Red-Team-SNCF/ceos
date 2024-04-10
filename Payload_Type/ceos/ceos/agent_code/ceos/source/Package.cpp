@@ -1,6 +1,6 @@
 #include "Package.h"
 
-LPCSTR  agentID = "helloworld";
+LPCSTR  agentID = "3d39a1b4-413e-4015-8690-f311c024a867";
 
 PPackage newPackage(BYTE commandID, BOOL init)
 {
@@ -42,11 +42,11 @@ BOOL addByte(PPackage package, BYTE byte)
 
 BOOL addInt32(PPackage package, UINT32 value)
 {
-	package->buffer = LocalReAlloc(package->buffer, package->length + sizeof(UINT32), LMEM_MOVEABLE);
+	package->buffer = LocalReAlloc(package->buffer, package->length + sizeof(UINT32), LMEM_MOVEABLE | LMEM_ZEROINIT);
 	if (!package->buffer)
 		return FALSE;
 
-	addInt32ToBuffer((PBYTE)package->buffer, value);
+	addInt32ToBuffer((PUCHAR)package->buffer, value);
 	package->length += sizeof(UINT32);
 
 	return TRUE;
@@ -55,11 +55,11 @@ BOOL addInt32(PPackage package, UINT32 value)
 
 BOOL addInt64(PPackage package, UINT64 value)
 {
-	package->buffer = LocalReAlloc(package->buffer, package->length + sizeof(UINT64), LMEM_MOVEABLE);
+	package->buffer = LocalReAlloc(package->buffer, package->length + sizeof(UINT64), LMEM_MOVEABLE | LMEM_ZEROINIT);
 	if (!package->buffer)
 		return FALSE;
 
-	addInt64ToBuffer((PBYTE)package->buffer, value);
+	addInt64ToBuffer((PUCHAR)package->buffer, value);
 	package->length += sizeof(UINT64);
 
 	return TRUE;

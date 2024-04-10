@@ -1,4 +1,7 @@
 #pragma once
+
+#ifndef PACKAGE
+#define PACKAGE
 #include <windows.h>
 #include "Utils.h"
 #include "Transport.h"
@@ -19,3 +22,4 @@ BOOL addString(PPackage package, PCHAR data, BOOL copySize);
 BOOL addWString(PPackage package, PWCHAR data, BOOL copySize);
 
 PParser sendPackage(PPackage package);
+#endif

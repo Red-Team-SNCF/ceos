@@ -1,4 +1,6 @@
 #pragma once
+#ifndef UTILS
+#define UTILS
 #include <windows.h>
 
 #ifdef __MINGW64__
@@ -18,3 +20,4 @@ size_t b64EncodedSize(size_t inlen);
 
 VOID addInt64ToBuffer(PBYTE buffer, UINT64 value);
 VOID addInt32ToBuffer(PBYTE buffer, UINT32 value);
+#endif

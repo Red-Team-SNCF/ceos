@@ -140,6 +140,7 @@
     <ClCompile Include="source\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ceos.h" />
     <ClInclude Include="include\Checkin.h" />
     <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\Config.h" />
