@@ -36,7 +36,7 @@ char* b64Encode(const unsigned char* in, SIZE_T len)
         return NULL;
 
     elen = b64EncodedSize(len);
-    out = (char*)MainRa->modules.win32.LocalAlloc(LPTR, elen + 1);
+    out = (char*)LocalAlloc(LPTR, elen + 1);
     if (!out)
         return NULL;
     out[elen] = '\0';

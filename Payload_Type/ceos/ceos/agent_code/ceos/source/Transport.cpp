@@ -1,4 +1,5 @@
 #include "Transport.h"
+#include "Config.h"
 #include <stdio.h>
 
 int getStatusCode(HANDLE hRequest)
@@ -42,10 +43,10 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 	LPCWSTR noProxyBypass = NULL;
 	DWORD proxyFlag = 0;
 
-	if (FALSE && FALSE)
+	if (proxyEnabled && proxyUrl)
 	{
 		accessType = WINHTTP_ACCESS_TYPE_NAMED_PROXY;
-		httpProxy = NULL;
+		httpProxy = proxyUrl;
 		noProxyBypass = WINHTTP_NO_PROXY_BYPASS;
 	}
 	else 
@@ -56,23 +57,23 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 	}
 
 	httpFlags = WINHTTP_FLAG_BYPASS_PROXY_CACHE;
-	if (FALSE)
+	if (ssl)
 		httpFlags |= WINHTTP_FLAG_SECURE;
 
 
-	hSession = WinHttpOpen(NULL, accessType, httpProxy, noProxyBypass, proxyFlag);
+	hSession = WinHttpOpen(userAgent, accessType, httpProxy, noProxyBypass, proxyFlag);
 	if (!hSession)
 		return NULL;
 
-	hConnect = WinHttpConnect(hSession, NULL, 80, 0);
+	hConnect = WinHttpConnect(hSession, hostname, port, 0);
 	if (!hConnect)
 		return NULL;
 
-	hRequest = WinHttpOpenRequest(hConnect, NULL, NULL, NULL, NULL, NULL, httpFlags);
+	hRequest = WinHttpOpenRequest(hConnect, httpMethod, endpoint, NULL, NULL, NULL, httpFlags);
 	if (!hRequest)
 		return NULL;
 
-	if (FALSE)
+	if (ssl)
 	{
 		httpFlags = SECURITY_FLAG_IGNORE_UNKNOWN_CA |
 			SECURITY_FLAG_IGNORE_CERT_DATE_INVALID |
@@ -119,12 +120,12 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 			autoProxyOptions.lpvReserved = NULL;
 			autoProxyOptions.dwReserved = 0;
 
-			HttpUrlLen = (15 + lstrlenW(L"192.168.50.1") + lstrlenW(L"data"));
+			HttpUrlLen = (15 + lstrlenW(hostname) + lstrlenW(endpoint));
 			HttpUrl = (LPWSTR)LocalAlloc(LPTR, HttpUrlLen * sizeof(WCHAR));
 
 			WCHAR fullHttpScheme[20] = L"%ws://%ws:%lu/%ws";
 
-			swprintf_s(HttpUrl, HttpUrlLen, fullHttpScheme, "http", "192.168.50.1", 80, "data");
+			swprintf_s(HttpUrl, HttpUrlLen, fullHttpScheme, L"http", hostname, port, endpoint);
 			
 			if (WinHttpGetProxyForUrl(hSession, HttpUrl, &autoProxyOptions, &proxyInfo))
 			{
@@ -188,4 +189,17 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 	return returnParser;
 
 
+}
+
+
+
+
+Parser* sendAndReceive(PBYTE data, SIZE_T size)
+{
+
+#ifdef HTTP_TRANSPORT
+	return makeHTTPRequest(data, size);
+#endif 
+
+	return nullptr;
 }

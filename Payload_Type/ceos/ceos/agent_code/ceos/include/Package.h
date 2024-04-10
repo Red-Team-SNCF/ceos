@@ -1,6 +1,7 @@
 #pragma once
 #include <windows.h>
 #include "Utils.h"
+#include "Transport.h"
 
 typedef struct {
 	PVOID buffer;
@@ -16,3 +17,5 @@ BOOL addInt64(PPackage package, UINT64 value);
 BOOL addBytes(PPackage package, PBYTE data, SIZE_T size, BOOL copySize);
 BOOL addString(PPackage package, PCHAR data, BOOL copySize);
 BOOL addWString(PPackage package, PWCHAR data, BOOL copySize);
+
+PParser sendPackage(PPackage package);

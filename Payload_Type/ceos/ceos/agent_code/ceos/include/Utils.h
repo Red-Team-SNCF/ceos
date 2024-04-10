@@ -12,6 +12,8 @@
 
 SIZE_T b64DecodedSize(const char* in);
 int b64Decode(const char* in, unsigned char* out, SIZE_T outlen);
+char* b64Encode(const unsigned char* in, SIZE_T len);
+size_t b64EncodedSize(size_t inlen);
 
 
 VOID addInt64ToBuffer(PBYTE buffer, UINT64 value);

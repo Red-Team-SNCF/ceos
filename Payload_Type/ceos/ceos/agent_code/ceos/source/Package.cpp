@@ -109,3 +109,21 @@ BOOL addWString(PPackage package, PWCHAR data, BOOL copySize)
 
 	return TRUE;
 }
+
+
+PParser sendPackage(PPackage package)
+{
+	PCHAR packetToSend = b64Encode((const unsigned char*)package->buffer, package->length);
+	SIZE_T sizePacketToSend = b64EncodedSize(package->length);
+
+	PParser response = sendAndReceive((PBYTE)packetToSend, sizePacketToSend);
+
+	if (!response)
+	{
+		packetToSend = nullptr;
+		return nullptr;
+	}
+		
+	return response;
+
+}
