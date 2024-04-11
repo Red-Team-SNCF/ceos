@@ -85,27 +85,23 @@ def getTasking(data):
 
 
 def postResponse(data):
-    numberOfTask = int.from_bytes(data[0:4])
-    data = data[4:]
-    i = 0
+    
     resTaks = []
-    while i < numberOfTask:
-        uuidTask = data[:36]
-        data = data[36:]
-        output, data = getBytesWithSize(data)
-        jsonTask = {
-            "task_id": uuidTask.decode('cp850'),
-            "user_output":output.decode('cp850'),
-        }
-        status = data[0]
-        if status == 0x0:
-            jsonTask["status"] = "error"
-        elif status == 0x1:
-            jsonTask["completed"] = True
-        data = data[1:]
+    
+    uuidTask = data[:36]
+    data = data[36:]
+    output, data = getBytesWithSize(data)
+    jsonTask = {
+        "task_id": uuidTask.decode('cp850'),
+        "user_output":output.decode('cp850'),
+    }
+    print(jsonTask)
 
-        resTaks.append(jsonTask)
-        i += 1
+
+    jsonTask["completed"] = True
+
+    resTaks.append(jsonTask)
+
     # for task in resTaks:
     #     for task2 in resTaks:
     #         if task == task2:
