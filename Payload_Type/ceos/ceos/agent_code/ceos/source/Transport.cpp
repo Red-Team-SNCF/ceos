@@ -180,12 +180,14 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 
 	} while (dwSize > 0);
 
+	
 	respBuffer = LocalReAlloc(respBuffer, respSize + 1, LMEM_MOVEABLE | LMEM_ZEROINIT);
-	sizePckt = b64DecodedSize((const char*)respBuffer);
-	pckt = (char*)LocalAlloc(LPTR, sizePckt);
-	b64Decode((const char*)respBuffer, (unsigned char*)pckt, sizePckt);
 
-	PParser returnParser = newParser((PBYTE)pckt, sizePckt);
+	/*sizePckt = b64DecodedSize((const char*)respBuffer);
+	pckt = (char*)LocalAlloc(LPTR, sizePckt);*/
+	//b64Decode((const char*)respBuffer, (unsigned char*)pckt, sizePckt);
+
+	PParser returnParser = newParser((PBYTE)respBuffer, respSize);
 	return returnParser;
 
 

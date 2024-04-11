@@ -2,9 +2,10 @@
 
 #ifndef PACKAGE
 #define PACKAGE
-#include <windows.h>
+
 #include "Utils.h"
 #include "Transport.h"
+
 
 typedef struct {
 	PVOID buffer;

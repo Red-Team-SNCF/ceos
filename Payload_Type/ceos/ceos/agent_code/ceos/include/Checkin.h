@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef CHECKIN
-#define CHECKIN
+#ifndef CHECKIN_H
+#define CHECKIN_H
 #include <ws2tcpip.h>
 #include <lm.h>
 #include <lmwksta.h>
@@ -9,9 +9,7 @@
 #include "Transport.h"
 #include "Parser.h"
 
-#include "Config.h"
-
 #pragma comment(lib, "netapi32.lib")
 
-BOOL checkin();
+PParser checkin();
 #endif
