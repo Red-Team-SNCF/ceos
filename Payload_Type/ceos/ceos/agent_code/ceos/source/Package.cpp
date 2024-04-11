@@ -46,7 +46,7 @@ BOOL addInt32(PPackage package, UINT32 value)
 	if (!package->buffer)
 		return FALSE;
 
-	addInt32ToBuffer((PUCHAR)package->buffer, value);
+	addInt32ToBuffer((PUCHAR)(package->buffer) + package->length, value);
 	package->length += sizeof(UINT32);
 
 	return TRUE;
@@ -68,7 +68,7 @@ BOOL addInt64(PPackage package, UINT64 value)
 
 BOOL addBytes(PPackage package, PBYTE data, SIZE_T size, BOOL copySize)
 {
-	if (copySize)
+	if (copySize && size)
 	{
 		if (!addInt32(package, size))
 			return FALSE;
