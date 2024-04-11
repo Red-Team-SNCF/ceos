@@ -9,4 +9,7 @@
 #define SHELL_CMD 0x54
 #define GET_TASKING 0x00
 #define POST_RESPONSE 0x01
+
+BOOL routine();
+
 #endif
