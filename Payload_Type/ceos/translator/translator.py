@@ -35,7 +35,11 @@ class myPythonTranslation(TranslationContainer):
         if data[0] == commands["checkin"]["hex_code"]:
             print("CHECK IN")
             response.Message = checkIn(data[1:])
-        else :
-            print("CODE : ")
-            print(data[0])
+        elif data[0] == commands["get_tasking"]["hex_code"]: #GET_TASKING
+            print("GET TASKING")
+            response.Message = getTasking(data[1:])
+        elif data[0] == commands["post_response"]["hex_code"]: #POSTREPONSE
+            print("POST RESPONSE")
+            response.Message = postResponse(data[1:])
+
         return response
