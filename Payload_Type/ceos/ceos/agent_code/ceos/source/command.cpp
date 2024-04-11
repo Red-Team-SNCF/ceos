@@ -29,7 +29,22 @@ BOOL commandDispatch(PParser response)
 	if (typeResponse == GET_TASKING)
 		return handleGetTasking(response);
 	else if (typeResponse == POST_RESPONSE)
-		return FALSE;
+		return TRUE;
 
 	return TRUE;
+}
+
+
+BOOL routine()
+{
+	PPackage getTask = newPackage(GET_TASKING, TRUE);
+	addInt32(getTask, 1);
+	Parser* ResponseParser = sendPackage(getTask);
+	if (!ResponseParser)
+		return FALSE;
+
+	commandDispatch(ResponseParser);
+
+	return TRUE;
+
 }

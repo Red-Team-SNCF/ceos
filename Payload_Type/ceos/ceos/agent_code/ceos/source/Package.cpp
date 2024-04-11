@@ -104,7 +104,7 @@ BOOL addString(PPackage package, PCHAR data, BOOL copySize)
 
 BOOL addWString(PPackage package, PWCHAR data, BOOL copySize)
 {
-	if (!addBytes(package, (PBYTE)data, lstrlenW(data), copySize))
+	if (!addBytes(package, (PBYTE)data, lstrlenW(data) * 2, copySize))
 		return FALSE;
 
 	return TRUE;
