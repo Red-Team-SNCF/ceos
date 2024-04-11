@@ -74,9 +74,9 @@ char* getOsName()
 
 BOOL checkin()
 {
-	PPackage checkin = newPackage(0, TRUE);
-
-	addInt32(checkin, 1);
+	PPackage checkin = newPackage(0, FALSE);
+	addString(checkin, (PCHAR)uuid, FALSE);
+	//addInt32(checkin, 1);
 	addString(checkin, (PCHAR)"192.168.50.1", TRUE);
 	
 	addString(checkin, getOsName(), TRUE);
