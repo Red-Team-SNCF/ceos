@@ -14,8 +14,9 @@ def checkIn(data):
     IPs = []
     print(numIPs)
     while i < numIPs:
-        addr, data = getBytesWithSize(data)
-        addr = str(addr).replace('b', '').replace("'","")
+        ip = data[:4]
+        data = data[4:]
+        addr = str(ipaddress.ip_address(ip))
         IPs.append(addr)
         i += 1
         
