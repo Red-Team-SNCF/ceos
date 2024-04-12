@@ -150,6 +150,7 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 
 	if (statusCode != 200)
 	{
+		printf("Error : Status code not OK --> %d\n", statusCode);
 		return NULL;
 	}
 
@@ -182,10 +183,6 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 
 	
 	respBuffer = LocalReAlloc(respBuffer, respSize + 1, LMEM_MOVEABLE | LMEM_ZEROINIT);
-
-	/*sizePckt = b64DecodedSize((const char*)respBuffer);
-	pckt = (char*)LocalAlloc(LPTR, sizePckt);*/
-	//b64Decode((const char*)respBuffer, (unsigned char*)pckt, sizePckt);
 
 	PParser returnParser = newParser((PBYTE)respBuffer, respSize);
 	return returnParser;

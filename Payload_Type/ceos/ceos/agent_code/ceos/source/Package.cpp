@@ -2,9 +2,6 @@
 #include "Package.h"
 
 
-
-LPCSTR  agentID = "3d39a1b4-413e-4015-8690-f311c024a867";
-
 PPackage newPackage(BYTE commandID, BOOL init)
 {
 	PPackage package = (PPackage)LocalAlloc(LPTR, sizeof(Package));

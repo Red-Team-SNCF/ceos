@@ -49,7 +49,7 @@ BOOL parseCheckin(PParser ResponseParser) {
 	PCHAR newUUID = getString(ResponseParser, &sizeUuid);
 	setUUID(newUUID);
 
-	//freeParser(ResponseParser);
+	freeParser(ResponseParser);
 
 	return TRUE;
 }
@@ -60,8 +60,7 @@ BOOL routine()
 	PPackage getTask = newPackage(GET_TASKING, TRUE);
 	addInt32(getTask, 1);
 	Parser* ResponseParser = sendPackage(getTask);
-	if (ResponseParser->length)
-		printf("Response length : %d\n", ResponseParser->length);
+
 	if (!ResponseParser)
 		return FALSE;
 
