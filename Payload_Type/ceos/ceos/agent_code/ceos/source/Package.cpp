@@ -1,6 +1,6 @@
+#include "ceos.h"
 #include "Package.h"
 
-LPCSTR  agentID = "3d39a1b4-413e-4015-8690-f311c024a867";
 
 PPackage newPackage(BYTE commandID, BOOL init)
 {
@@ -13,7 +13,7 @@ PPackage newPackage(BYTE commandID, BOOL init)
 	package->length = 0;
 	if (init)
 	{
-		addString(package, (PCHAR)agentID, FALSE);
+		addString(package, getUUID(), FALSE);
 	}
 
 	return package;

