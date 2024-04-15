@@ -36,29 +36,22 @@ def checkIn(data):
     
     # Retrieve HostName
     hostname, data = getBytesWithSize(data)
-    print(hostname)
 
     # Retrieve Username
     username, data = getBytesWithSize(data)
-    print(username)
 
     # Retrieve Domaine
     domain, data = getBytesWithSize(data)
-    print(domain)
     
-
     # Retrieve PID
     pid = int.from_bytes(data[0:4])
     data = data[4:]
-    print(pid)
 
     # Retrieve Process Name
     processName, data = getBytesWithSize(data)
-    print(processName)
 
     #Retrieve External IP
     externalIP, data = getBytesWithSize(data)
-    print(externalIP)
 
     dataJson = {
             "action": "checkin",
@@ -73,8 +66,6 @@ def checkIn(data):
             "architecture": archOS ,
             "externalIP": externalIP.decode('cp850'),
         }
-
-    print(dataJson)
     
     return dataJson
 
@@ -96,20 +87,9 @@ def postResponse(data):
         "task_id": uuidTask.decode('cp850'),
         "user_output":output.decode('cp850'),
     }
-    print(jsonTask)
-
 
     jsonTask["completed"] = True
-
     resTaks.append(jsonTask)
-
-    # for task in resTaks:
-    #     for task2 in resTaks:
-    #         if task == task2:
-    #             continue
-    #         if task2["task_id"] == task["task_id"]:
-    #             task["user_output"] += task2["user_output"]
-    #         resTaks.remove(task2)
     
     dataJson = {
         "action": "post_response",

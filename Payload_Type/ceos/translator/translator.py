@@ -30,7 +30,6 @@ class myPythonTranslation(TranslationContainer):
         elif inputMsg.Message["action"] == "get_tasking":
             print("Response TASKING")
             response.Message = responseTasking(inputMsg.Message["tasks"])
-            print(response.Message)
         elif inputMsg.Message["action"] == "post_response":
             print("Response POSTREP")
             response.Message = responsePosting(inputMsg.Message["responses"])

@@ -19,11 +19,8 @@ def responseTasking(tasks):
         command_to_run = task["command"]
         
         if commands[command_to_run]["input_type"] == "string":
-            print("Im here")
             data = commands[command_to_run]["hex_code"].to_bytes(1, "big")
-            print(data)
             data += task["id"].encode()
-            print(data)
 
             if task["parameters"] != "":
                 parameters = json.loads(task["parameters"])
@@ -40,8 +37,6 @@ def responseTasking(tasks):
             print("Unsupported type (for now...)")
     
     dataToSend = dataHead + dataTask
-
-    print(dataToSend)
     
     return dataToSend
 
