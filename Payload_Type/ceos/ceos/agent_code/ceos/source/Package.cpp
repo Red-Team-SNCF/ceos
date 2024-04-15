@@ -12,8 +12,12 @@ PPackage newPackage(BYTE commandID, BOOL init)
 		return nullptr;
 
 	package->length = 0;
-	if (init)
+	if (init) 
+	{
 		addString(package, ceosConfig->agentID, FALSE);
+		addByte(package, commandID);
+	}
+		
 	
 
 	return package;

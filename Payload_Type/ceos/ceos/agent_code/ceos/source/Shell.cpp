@@ -13,8 +13,7 @@ BOOL executeShell(PParser arguments)
 	CHAR path[1035];
 
 	// Create the response package
-	PPackage responseTask = newPackage(0, TRUE);
-	addByte(responseTask, POST_RESPONSE);
+	PPackage responseTask = newPackage(POST_RESPONSE, TRUE);
 	addString(responseTask, taskUuid, FALSE);
 
 	// Temporary output to store the result

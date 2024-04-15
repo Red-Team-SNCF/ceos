@@ -94,9 +94,8 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 			proxyInfo.lpszProxyBypass = proxyConfig.lpszProxyBypass;
 
 			if (!WinHttpSetOption(hRequest, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo)))
-			{
 				return NULL;
-			}
+			
 		}
 
 		else if ((proxyConfig.lpszAutoConfigUrl != NULL && lstrlenW(proxyConfig.lpszAutoConfigUrl) != 0) || proxyConfig.fAutoDetect == TRUE)
@@ -130,9 +129,7 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 			if (WinHttpGetProxyForUrl(hSession, HttpUrl, &autoProxyOptions, &proxyInfo))
 			{
 				if (!WinHttpSetOption(hRequest, WINHTTP_OPTION_PROXY, &proxyInfo, sizeof(proxyInfo)))
-				{
 					return NULL;
-				}
 			}
 
 
@@ -189,7 +186,6 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 
 
 }
-
 
 
 

