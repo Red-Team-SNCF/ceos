@@ -6,13 +6,12 @@ def checkIn(data):
     # Retrieve UUID
     uuid = data[:36]
     data = data[36:]
-    print(data)
+    
     # Retrieve IPs
     numIPs = int.from_bytes(data[0:4])
     data = data[4:]
     i = 0
     IPs = []
-    print(numIPs)
     while i < numIPs:
         ip = data[:4]
         data = data[4:]
@@ -20,7 +19,6 @@ def checkIn(data):
         IPs.append(addr)
         i += 1
         
-    print(IPs)
     # Retrieve OS
     targetOS, data = getBytesWithSize(data)
     
