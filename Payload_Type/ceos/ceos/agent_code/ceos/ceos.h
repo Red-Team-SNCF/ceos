@@ -2,27 +2,39 @@
 #ifndef CEOS_H
 #define CEOS_H
 
-#include "Checkin.h"
+
 
 #include <windows.h>
 #include "Command.h"
 #include "Package.h"
-#include "Transport.h"
-#include "Parser.h"
-#include "Config.h"
-#include "Utils.h"
 
+#include "Parser.h"
+#include "Utils.h"
+#include "Checkin.h"
 
 
 typedef struct
 {
+	// UUID
 	PCHAR agentID;
+
+	// HTTP 
+	PWCHAR hostName;
+	DWORD httpPort;
+	PWCHAR endPoint;
+	PWCHAR userAgent;
+	PWCHAR httpMethod;
+
+	BOOL isSSL;
+	BOOL isProxyEnabled;
+	PWCHAR proxyURL;
+
+
 } CONFIG_CEOS, * PCONFIG_CEOS;
 
 extern PCONFIG_CEOS ceosConfig;
 
 
-PCHAR getUUID();
 VOID setUUID(PCHAR newUUID);
 
 

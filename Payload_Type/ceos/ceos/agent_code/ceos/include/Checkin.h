@@ -2,7 +2,7 @@
 
 #ifndef CHECKIN_H
 #define CHECKIN_H
-#include <ws2tcpip.h>
+#include <windows.h>
 #include <lm.h>
 #include <lmwksta.h>
 #include "Package.h"

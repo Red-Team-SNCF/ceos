@@ -79,9 +79,8 @@ PBYTE getBytes(PParser parser, PSIZE_T size)
 		*size = length;
 	}
 	else
-	{
 		length = *size;
-	}
+
 
 	PBYTE outData = (PBYTE)LocalAlloc(LPTR, length);
 	if (!outData)

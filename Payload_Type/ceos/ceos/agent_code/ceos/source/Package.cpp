@@ -1,7 +1,8 @@
 #include "ceos.h"
 #include "Package.h"
 
-
+//Creates new Package.
+//If init is TRUE, then adds the current commandID and the UUID to the package.
 PPackage newPackage(BYTE commandID, BOOL init)
 {
 	PPackage package = (PPackage)LocalAlloc(LPTR, sizeof(Package));
@@ -12,9 +13,8 @@ PPackage newPackage(BYTE commandID, BOOL init)
 
 	package->length = 0;
 	if (init)
-	{
-		addString(package, getUUID(), FALSE);
-	}
+		addString(package, ceosConfig->agentID, FALSE);
+	
 
 	return package;
 }
@@ -79,7 +79,6 @@ BOOL addBytes(PPackage package, PBYTE data, SIZE_T size, BOOL copySize)
 		package->buffer = LocalReAlloc(package->buffer, package->length + size, LMEM_MOVEABLE | LMEM_ZEROINIT);
 		if (!package->buffer)
 			return FALSE;
-
 
 		if (copySize)
 			addInt32ToBuffer((PBYTE)package->buffer + (package->length - sizeof(UINT32)), size);

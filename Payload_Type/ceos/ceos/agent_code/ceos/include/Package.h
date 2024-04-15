@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef PACKAGE
-#define PACKAGE
+#ifndef PACKAGE_H
+#define PACKAGE_H
 
 #include "Utils.h"
 #include "Transport.h"

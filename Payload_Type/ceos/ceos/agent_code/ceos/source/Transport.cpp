@@ -1,5 +1,5 @@
 #include "Transport.h"
-#include "Config.h"
+
 #include <stdio.h>
 
 int getStatusCode(HANDLE hRequest)
@@ -43,10 +43,10 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 	LPCWSTR noProxyBypass = NULL;
 	DWORD proxyFlag = 0;
 
-	if (proxyEnabled && proxyUrl)
+	if (ceosConfig->isProxyEnabled && ceosConfig->proxyURL)
 	{
 		accessType = WINHTTP_ACCESS_TYPE_NAMED_PROXY;
-		httpProxy = proxyUrl;
+		httpProxy = ceosConfig->proxyURL;
 		noProxyBypass = WINHTTP_NO_PROXY_BYPASS;
 	}
 	else 
@@ -57,23 +57,23 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 	}
 
 	httpFlags = WINHTTP_FLAG_BYPASS_PROXY_CACHE;
-	if (ssl)
+	if (ceosConfig->isSSL)
 		httpFlags |= WINHTTP_FLAG_SECURE;
 
 
-	hSession = WinHttpOpen(userAgent, accessType, httpProxy, noProxyBypass, proxyFlag);
+	hSession = WinHttpOpen(ceosConfig->userAgent, accessType, httpProxy, noProxyBypass, proxyFlag);
 	if (!hSession)
 		return NULL;
 
-	hConnect = WinHttpConnect(hSession, hostname, port, 0);
+	hConnect = WinHttpConnect(hSession, ceosConfig->hostName, ceosConfig->httpPort, 0);
 	if (!hConnect)
 		return NULL;
 
-	hRequest = WinHttpOpenRequest(hConnect, httpMethod, endpoint, NULL, NULL, NULL, httpFlags);
+	hRequest = WinHttpOpenRequest(hConnect, ceosConfig->httpMethod, ceosConfig->endPoint, NULL, NULL, NULL, httpFlags);
 	if (!hRequest)
 		return NULL;
 
-	if (ssl)
+	if (ceosConfig->isSSL)
 	{
 		httpFlags = SECURITY_FLAG_IGNORE_UNKNOWN_CA |
 			SECURITY_FLAG_IGNORE_CERT_DATE_INVALID |
@@ -120,12 +120,12 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 			autoProxyOptions.lpvReserved = NULL;
 			autoProxyOptions.dwReserved = 0;
 
-			HttpUrlLen = (15 + lstrlenW(hostname) + lstrlenW(endpoint));
+			HttpUrlLen = (15 + lstrlenW(ceosConfig->hostName) + lstrlenW(ceosConfig->endPoint));
 			HttpUrl = (LPWSTR)LocalAlloc(LPTR, HttpUrlLen * sizeof(WCHAR));
 
 			WCHAR fullHttpScheme[20] = L"%ws://%ws:%lu/%ws";
 
-			swprintf_s(HttpUrl, HttpUrlLen, fullHttpScheme, L"http", hostname, port, endpoint);
+			swprintf_s(HttpUrl, HttpUrlLen, fullHttpScheme, L"http", ceosConfig->hostName, ceosConfig->httpPort, ceosConfig->endPoint);
 			
 			if (WinHttpGetProxyForUrl(hSession, HttpUrl, &autoProxyOptions, &proxyInfo))
 			{
@@ -150,7 +150,7 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 
 	if (statusCode != 200)
 	{
-		printf("Error : Status code not OK --> %d\n", statusCode);
+		printf("[HTTP] Status code not OK --> %d\n", statusCode);
 		return NULL;
 	}
 

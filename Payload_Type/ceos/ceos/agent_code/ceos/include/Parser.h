@@ -1,5 +1,9 @@
 #pragma once
+#ifndef PARSER_H
+#define PARSER_H
+
 #include "Utils.h"
+
 
 typedef struct 
 {
@@ -19,3 +23,5 @@ UINT64 getInt64(PParser parser);
 PBYTE getBytes(PParser parser, PSIZE_T size);
 PCHAR getString(PParser parser, PSIZE_T size);
 PWCHAR getWString(PParser parser, PSIZE_T size);
+
+#endif
