@@ -9,3 +9,5 @@
 #define useragent L""
 #define httpmethod L"POST"
 #define port 80
+
+#define sleep_time 3000

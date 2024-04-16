@@ -1,7 +1,9 @@
 #pragma once
 
-#if defined(_DEBUG)
 #include <stdio.h>
+
+#if defined(_DEBUG)
+
 
 #define DBG "DBG"
 #define ERR "ERR"

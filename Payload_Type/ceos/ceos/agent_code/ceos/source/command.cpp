@@ -71,7 +71,7 @@ BOOL routine()
 	commandDispatch(ResponseParser);
 
 	// Sleep
-	Sleep(3000);
+	Sleep(ceosConfig->sleeptime);
 
 	return TRUE;
 
