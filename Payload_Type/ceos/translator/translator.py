@@ -10,7 +10,7 @@ from translator.commands_from_implant import *
 from mythic_container.TranslationBase import *
 
 
-class myPythonTranslation(TranslationContainer):
+class CeosTranslator(TranslationContainer):
     name = "CeosTranslator"
     description = "Translator for Ceos agent"
     author = "@RedTeam_SNCF"
