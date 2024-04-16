@@ -6,7 +6,7 @@
 
 CONFIG_CEOS* ceosConfig = (CONFIG_CEOS*)LocalAlloc(LPTR, sizeof(CONFIG_CEOS));
 
-int main()
+VOID ceosMain()
 {
     // Config Init
     ceosConfig->agentID = (PCHAR)initUUID;

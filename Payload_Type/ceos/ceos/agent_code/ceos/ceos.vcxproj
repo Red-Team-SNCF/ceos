@@ -135,6 +135,7 @@
     <ClCompile Include="ceos.cpp" />
     <ClCompile Include="source\Checkin.cpp" />
     <ClCompile Include="source\Command.cpp" />
+    <ClCompile Include="source\Main.cpp" />
     <ClCompile Include="source\Package.cpp" />
     <ClCompile Include="source\Parser.cpp" />
     <ClCompile Include="source\Shell.cpp" />
@@ -142,7 +143,7 @@
     <ClCompile Include="source\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ceos.h" />
+    <ClInclude Include="include\ceos.h" />
     <ClInclude Include="include\Checkin.h" />
     <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\Config.h" />
