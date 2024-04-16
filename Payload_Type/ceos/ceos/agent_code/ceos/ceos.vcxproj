@@ -147,6 +147,7 @@
     <ClInclude Include="include\Checkin.h" />
     <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\Config.h" />
+    <ClInclude Include="include\Debug.h" />
     <ClInclude Include="include\Package.h" />
     <ClInclude Include="include\Parser.h" />
     <ClInclude Include="include\Shell.h" />

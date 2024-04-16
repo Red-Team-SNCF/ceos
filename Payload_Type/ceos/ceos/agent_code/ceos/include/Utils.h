@@ -2,6 +2,8 @@
 #ifndef UTILS
 #define UTILS
 #include <windows.h>
+#include "Debug.h"
+
 
 #ifdef __MINGW64__
 #define BYTESWAP32(x) __builtin_bswap32( x )

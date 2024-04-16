@@ -22,7 +22,7 @@ BOOL executeShell(PParser arguments)
 	fp = _popen(cmd, "rb");
 	if (!fp)
 	{
-		printf("[SHELL] Error in executeShell command");
+		_err("[SHELL] Error in executeShell command");
 		return FALSE;
 	}
 	while (fgets(path, sizeof(path), fp) != nullptr)

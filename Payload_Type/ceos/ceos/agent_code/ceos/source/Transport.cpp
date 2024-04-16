@@ -1,6 +1,5 @@
 #include "Transport.h"
 
-#include <stdio.h>
 
 int getStatusCode(HANDLE hRequest)
 {
@@ -147,7 +146,7 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 
 	if (statusCode != 200)
 	{
-		printf("[HTTP] Status code not OK --> %d\n", statusCode);
+		_err("[HTTP] Status code not OK --> %d\n", statusCode);
 		return NULL;
 	}
 
@@ -156,13 +155,13 @@ Parser* makeHTTPRequest(PBYTE bufferIn, UINT32 bufferLen)
 		dwSize = 1024;
 		if (!WinHttpQueryDataAvailable(hRequest, &dwSize))
 		{
-			printf("[HTTP] Error %u in WinHttpQueryDataAvailable.\n", GetLastError());
+			_err("[HTTP] Error %u in WinHttpQueryDataAvailable.\n", GetLastError());
 			return NULL;
 		}
 
 		if (!WinHttpReadData(hRequest, buffer, 1024, &dwDownloaded))
 		{
-			printf("[HTTP] Error %u in WinHttpReadData.\n", GetLastError());
+			_err("[HTTP] Error %u in WinHttpReadData.\n", GetLastError());
 			return NULL;
 		}
 
