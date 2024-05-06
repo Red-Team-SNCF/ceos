@@ -6,8 +6,6 @@
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR szArgs, _In_ int nCmdShow)
 //#endif
 {
-    AllocConsole();
-    freopen( "CONOUT$", "w", stdout );
 	ceosMain();
     
 	return 0;

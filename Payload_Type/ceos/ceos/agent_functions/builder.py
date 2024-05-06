@@ -116,7 +116,8 @@ class CeosAgent(PayloadType):
                                                               stderr=asyncio.subprocess.PIPE)
 
         stdout, stderr = await proc.communicate()
-
+        print(stdout)
+        print(stderr)
 
         await SendMythicRPCPayloadUpdatebuildStep(MythicRPCPayloadUpdateBuildStepMessage(
                 PayloadUUID=self.uuid,
