@@ -1,4 +1,19 @@
-## Protocol de communication 
+# CEOS - Basic Mythic Implant in C
+
+Ceos is a basic Windows implant written in C interfaceable with the Mythic C2 framework. 
+
+This repo was made to showcase the usage of a translator container for low-level languages implant for Mythic.
+A blogpost explains in great detail how (and why) this project was conceived.
+
+## Install Ceos
+
+
+
+## Detection
+
+A YARA rule to detect Ceos is provided for detection purposes.
+
+## Communication protocol
 ### HEADER - Implant to C2
 
 | Key     | Key Len (bytes)   | Type       |
@@ -20,6 +35,7 @@ UUID|BODY|
 #### Checkin - Implant to C2
 
 Expected : 
+```
 a21bab2e-462e-49ab-9800-fbedaf53ad15
 {
     "action":"checkin",
@@ -33,7 +49,7 @@ a21bab2e-462e-49ab-9800-fbedaf53ad15
     "pid":123,
     "processname":"malware.exe",
 }
-
+```
 
 | Key           | Key Len (bytes)   | Type        |
 |---------------|-------------------|-------------|
@@ -67,13 +83,13 @@ a21bab2e-462e-49ab-9800-fbedaf53ad15
 
 
 ### GetTasking - Implant to C2
-
+```
 Expected: 
 {
 	"action": "get_tasking",
 	"tasking_size": 1, //indicate the maximum number of tasks you want back
 }
-
+```
 
 | Key           | Key Len (bytes)   | Type        |
 |---------------|-------------------|-------------|
@@ -82,7 +98,7 @@ Expected:
 
 ### GetTasking - C2 to Implant
 
-
+```
 Expected : 
 {
 	"action": "get_tasking",
@@ -95,6 +111,7 @@ Expected :
 		}
 	],
 }
+```
 
 | Key           | Key Len (bytes)   | Type        |
 |---------------|-------------------|-------------|
@@ -126,6 +143,7 @@ Expected :
 
 ### Post Response Classic output return - Implant to C2
 
+```
 Expected : 
 {
 	"action": "post_response",
@@ -141,7 +159,7 @@ Expected :
 	], 
 
 }
-
+```
 | Key           | Key Len (bytes)   | Type        |
 |---------------|-------------------|-------------|
 | UUID Resp 1   | 36                | Str (char*) |
@@ -154,6 +172,7 @@ Expected :
 
 ### Post Response Classic output return - C2 to Implant
 
+```
 Expected : 
 {
 	"action": "post_response",
@@ -165,6 +184,7 @@ Expected :
 		}
 	]
 }
+```
 
 | Key           | Key Len (bytes)   | Type        |
 |---------------|-------------------|-------------|
