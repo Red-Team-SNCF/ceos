@@ -7,7 +7,10 @@ A blogpost explains in great detail how (and why) this project was conceived.
 
 ## Install Ceos
 
-
+Once Mythic is installed and running : 
+```
+./mythic-cli install github https://github.com/Red-Team-SNCF/ceos
+```
 
 ## Detection
 
